@@ -22,6 +22,7 @@ const EventsPage = () => {
         if (currentUser) {
           await fetchUserRegistrations();
         }
+        console.log("Events:", response);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -51,6 +52,8 @@ const EventsPage = () => {
         registrations[reg.eventId] = true;
       });
       setUserRegistrations(registrations);
+      console.log("Registration:", registrations);
+      console.log("Current user:", currentUser);
     } catch (error) {
       console.error("Error fetching user registrations:", error);
     }
@@ -84,7 +87,7 @@ const EventsPage = () => {
       await AhiskaApi.addFeedback(eventId, {
         content: feedbackText[eventId] || "",
       });
-      alert("Feedback submitted!");
+      // alert("Feedback submitted!");
       setFeedbackText((prevTexts) => ({ ...prevTexts, [eventId]: "" }));
       await fetchFeedback(eventId);
     } catch (error) {
@@ -100,7 +103,14 @@ const EventsPage = () => {
         <div key={event.id} className="border p-4 mb-4">
           <h2 className="text-lg font-semibold">{event.title}</h2>
           <p>{event.description}</p>
-          <p>Date: {event.date}</p>
+          <p>
+            Date:{" "}
+            {new Date(event.date).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </p>
           <p>Time: {event.time}</p>
           <p>Location: {event.location}</p>
           <button
