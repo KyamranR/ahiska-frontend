@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext";
 import EventForm from "./EventForm";
 import UserList from "./UserList";
 import FeedbackList from "./FeedbackList";
+import EditEventForm from "./EditEventForm";
 
 const AdminPanel = () => {
   const { currentUser } = useAuth();
@@ -82,10 +83,18 @@ const AdminPanel = () => {
             >
               {editingEvent ? "Edit Event" : "Create Event"}
             </button>
-            {showEventForm && (
-              <EventForm
-                onEventCreated={handleEventCreated}
+            {showEventForm && !editingEvent && (
+              <EventForm onEventCreated={handleEventCreated} />
+            )}
+
+            {editingEvent && (
+              <EditEventForm
                 eventToEdit={editingEvent}
+                onEventUpdated={handleEditEvent}
+                onCancel={() => {
+                  setEditingEvent(null);
+                  setShowEventForm(false);
+                }}
               />
             )}
           </div>
