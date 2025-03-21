@@ -28,20 +28,15 @@ const HomePage = () => {
             events.map((event) => (
               <div key={event.id} className="bg-white p-4 rounded shadow">
                 <h3 className="text-xl font-bold">{event.title}</h3>
-                <p className="text-gray-600">{event.date}</p>
+                <p className="text-gray-600">
+                  {new Date(event.date).toLocaleDateString("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                  })}
+                </p>
                 <p className="text-gray-600">{event.time}</p>
                 <p>{event.description}</p>
-
-                {currentUser && (
-                  <div className="mt-4">
-                    <button className="bg-green-500 text-white px-3 py-2 rounded mr-2">
-                      Register
-                    </button>
-                    <button className="bg-yellow-500 text-white px-3 py-2 rounded">
-                      Leave Feedback
-                    </button>
-                  </div>
-                )}
               </div>
             ))
           ) : (
