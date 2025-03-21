@@ -107,7 +107,7 @@ class AhiskaApi {
   }
 
   static async getUserRegistrations(userId) {
-    return await this.request(`users/user/${userId}`);
+    return await this.request(`users/${userId}`);
   }
 
   /** FEEDBACK ROUTES */
