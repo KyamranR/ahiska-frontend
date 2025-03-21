@@ -5,11 +5,11 @@ import { useAuth } from "../context/AuthContext";
 const EventForm = ({ onEventCreated, eventToEdit = null }) => {
   const { currentUser } = useAuth();
   const [eventData, setEventData] = useState({
-    title: eventToEdit?.title || "",
-    description: eventToEdit?.description || "",
-    date: eventToEdit?.date || "",
-    time: eventToEdit?.time || "",
-    location: eventToEdit?.location || "",
+    title: "",
+    description: "",
+    date: "",
+    time: "",
+    location: "",
     created_by: currentUser.id,
   });
 
@@ -20,11 +20,7 @@ const EventForm = ({ onEventCreated, eventToEdit = null }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (eventToEdit) {
-        await AhiskaApi.updateEvent(eventToEdit.id, eventData);
-      } else {
-        await AhiskaApi.createEvent(eventData);
-      }
+      await AhiskaApi.createEvent(eventData);
       onEventCreated();
     } catch (error) {
       console.error("Error creating event:", error);
