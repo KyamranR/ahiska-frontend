@@ -9,6 +9,7 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
   const [answeredByNames, setAnsweredByNames] = useState({});
 
   useEffect(() => {
+    if (!currentUser) return;
     const fetchUserNames = async () => {
       try {
         const askedByUser = await AhiskaApi.getCurrentUser(question.askedBy);
@@ -36,7 +37,7 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
     };
 
     fetchUserNames();
-  }, [question]);
+  }, [question, currentUser]);
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
@@ -68,7 +69,9 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
     <div className="border rounded-lg p-4 mb-4 shadow-md bg-white">
       <p className="font-bold">
         Question: {question.question}{" "}
-        <span className="text-gray-500">(Asked by: {askedByName})</span>
+        {currentUser && (
+          <span className="text-gray-500">(Asked by: {askedByName})</span>
+        )}
       </p>
 
       {/* Display multiple answers */}
@@ -79,9 +82,11 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
             {question.answers.map((answer) => (
               <li key={answer.id} className="text-gray-700">
                 {answer.answer}{" "}
-                <span className="text-gray-500">
-                  (Answered by: {answeredByNames[answer.id]})
-                </span>
+                {currentUser && (
+                  <span className="text-gray-500">
+                    (Answered by: {answeredByNames[answer.id]})
+                  </span>
+                )}
               </li>
             ))}
           </ul>
