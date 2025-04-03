@@ -5,8 +5,8 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
   const [eventData, setEventData] = useState({
     title: "",
     description: "",
-    date: "",
-    time: "",
+    event_date: "",
+    event_time: "",
     location: "",
   });
 
@@ -15,8 +15,10 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
       setEventData({
         title: eventToEdit?.title || "",
         description: eventToEdit?.description || "",
-        date: eventToEdit?.date ? eventToEdit.date.split("T")[0] : "",
-        time: eventToEdit?.time || "",
+        event_date: eventToEdit?.event_date
+          ? eventToEdit.event_date.split("T")[0]
+          : "",
+        event_time: eventToEdit?.event_time || "",
         location: eventToEdit?.location || "",
       });
     }
@@ -67,8 +69,8 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
         </label>
         <input
           type="date"
-          name="date"
-          value={eventData.date}
+          name="event_date"
+          value={eventData.event_date}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
@@ -78,9 +80,9 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
           Time:
         </label>
         <input
-          type="time"
-          name="time"
-          value={eventData.time}
+          type="text"
+          name="event_time"
+          value={eventData.event_time}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         />
