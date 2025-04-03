@@ -81,9 +81,9 @@ const AdminPanel = () => {
               onClick={handleCreateEvent}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              {editingEvent ? "Edit Event" : "Create Event"}
+              Create Event
             </button>
-            {showEventForm && !editingEvent && (
+            {showEventForm && editingEvent === null && (
               <EventForm onEventCreated={handleEventCreated} />
             )}
 
@@ -144,7 +144,7 @@ const AdminPanel = () => {
             </ul>
           </div>
 
-          <div className="mb-4">
+          {/* <div className="mb-4">
             <button
               onClick={handleCreateEvent}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -157,7 +157,7 @@ const AdminPanel = () => {
                 eventToEdit={editingEvent}
               />
             )}
-          </div>
+          </div> */}
 
           <div className="mb-4">
             <UserList users={users} refreshUsers={fetchData} />
