@@ -10,6 +10,7 @@ const EventsPage = () => {
   const [feedbackText, setFeedbackText] = useState({});
   const [eventFeedback, setEventFeedback] = useState({});
   const [userRegistrations, setUserRegistrations] = useState({});
+  const [isRegistering, setIsRegistering] = useState({});
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -47,6 +48,11 @@ const EventsPage = () => {
       const registrationsData = await AhiskaApi.getUserRegistrations(
         currentUser.id
       );
+      if (!registrationsData || !registrationsData.registrations) {
+        console.error("No registrations data received");
+        return;
+      }
+      console.log("API Response:", registrationsData);
       const registrations = {};
       registrationsData.registrations.forEach((reg) => {
         registrations[reg.eventId] = true;
@@ -64,34 +70,63 @@ const EventsPage = () => {
       navigate("/login");
       return;
     }
+    console.log("Register button clicked for event ID:", eventId);
+    console.log("Current User ID:", currentUser.id);
+    setIsRegistering((prev) => ({ ...prev, [eventId]: true }));
+    const wasRegistered = userRegistrations[eventId];
+
     try {
-      if (userRegistrations[eventId]) {
+      if (wasRegistered) {
+        console.log("Unregistering user from event ID:", eventId);
         await AhiskaApi.unregisterFromEvent(eventId);
-        setUserRegistrations((prev) => ({ ...prev, [eventId]: false }));
+        console.log("Successfully unregistered.");
+        setUserRegistrations((prev) => {
+          const updatedRegistrations = { ...prev };
+          delete updatedRegistrations[eventId];
+          return updatedRegistrations;
+        });
       } else {
+        console.log("Registering user for event ID:", eventId);
         await AhiskaApi.registerForEvent(eventId);
-        setUserRegistrations((prev) => ({ ...prev, [eventId]: true }));
+        console.log("Successfully registered.");
+        setUserRegistrations((prev) => ({
+          ...prev,
+          [eventId]: true,
+        }));
       }
+
+      await fetchUserRegistrations();
     } catch (error) {
       console.error("Error registering for event:", error);
-      alert("Registration failed.");
+      alert(
+        `Registration failed: ${
+          error?.message || "An unexpected error occurred."
+        }`
+      );
+    } finally {
+      setIsRegistering((prev) => ({ ...prev, [eventId]: false }));
     }
   };
-
   const handleFeedbackSubmit = async (eventId) => {
     if (!currentUser) {
       navigate("/login");
+
       return;
     }
+
     try {
       await AhiskaApi.addFeedback(eventId, {
         content: feedbackText[eventId] || "",
       });
+
       // alert("Feedback submitted!");
+
       setFeedbackText((prevTexts) => ({ ...prevTexts, [eventId]: "" }));
+
       await fetchFeedback(eventId);
     } catch (error) {
       console.error("Error submitting feedback:", error);
+
       alert("Feedback submission failed.");
     }
   };
@@ -105,7 +140,7 @@ const EventsPage = () => {
           <p>{event.description}</p>
           <p>
             Date:{" "}
-            {new Date(event.date).toLocaleDateString("en-US", {
+            {new Date(event.event_date).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
@@ -117,11 +152,16 @@ const EventsPage = () => {
             onClick={() => handleRegister(event.id)}
             className={
               userRegistrations[event.id]
-                ? "bg-gray-500 text-white px-4 py-2 rounded mt-2 mr-2"
+                ? "bg-red-500 text-white px-4 py-2 rounded mt-2 mr-2"
                 : "bg-blue-500 text-white px-4 py-2 rounded mt-2 mr-2"
             }
+            disabled={isRegistering[event.id]}
           >
-            {userRegistrations[event.id] ? "Registered" : "Register"}
+            {isRegistering[event.id]
+              ? "Processing..."
+              : userRegistrations[event.id]
+              ? "Unregister"
+              : "Register"}
           </button>
           {currentUser && (
             <div className="mt-2">
