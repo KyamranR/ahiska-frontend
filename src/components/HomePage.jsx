@@ -29,7 +29,7 @@ const HomePage = () => {
               <div key={event.id} className="bg-white p-4 rounded shadow">
                 <h3 className="text-xl font-bold">{event.title}</h3>
                 <p className="text-gray-600">
-                  {new Date(event.date).toLocaleDateString("en-US", {
+                  {new Date(event.event_date).toLocaleDateString("en-US", {
                     year: "numeric",
                     month: "long",
                     day: "numeric",
