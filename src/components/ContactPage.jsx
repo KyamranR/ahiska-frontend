@@ -29,6 +29,12 @@ const Contact = () => {
 
       console.log("Email sent:", response);
       setStatus("Message sent successfully!");
+      setFormData({
+        name: "",
+        email: "",
+        subject: "",
+        message: "",
+      });
     } catch (err) {
       console.error("Email sending error:", err);
       setStatus("Failed to send message. Try again.");
