@@ -63,7 +63,9 @@ class AhiskaApi {
   static async getCurrentUser(userId) {
     return await this.request(`users/${userId}`);
   }
-
+  static async getById(userId) {
+    return await this.request(`user/${userId}`);
+  }
   static async updateUser(userId, userData) {
     return await this.request(`users/${userId}`, userData, "patch");
   }
