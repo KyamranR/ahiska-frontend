@@ -23,7 +23,6 @@ const EventsPage = () => {
         if (currentUser) {
           await fetchUserRegistrations();
         }
-        console.log("Events:", response);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
@@ -52,14 +51,12 @@ const EventsPage = () => {
         console.error("No registrations data received");
         return;
       }
-      console.log("API Response:", registrationsData);
+
       const registrations = {};
       registrationsData.registrations.forEach((reg) => {
         registrations[reg.eventId] = true;
       });
       setUserRegistrations(registrations);
-      console.log("Registration:", registrations);
-      console.log("Current user:", currentUser);
     } catch (error) {
       console.error("Error fetching user registrations:", error);
     }
@@ -189,7 +186,10 @@ const EventsPage = () => {
               <h3 className="text-lg font-semibold">Feedback:</h3>
               <ul>
                 {eventFeedback[event.id].map((feedback) => (
-                  <li key={feedback.id}>{feedback.content}</li>
+                  <li key={feedback.id}>
+                    {feedback.content} - {feedback.firstName}{" "}
+                    {feedback.lastName}
+                  </li>
                 ))}
               </ul>
             </div>
