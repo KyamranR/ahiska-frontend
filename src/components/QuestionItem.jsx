@@ -5,39 +5,6 @@ import { useAuth } from "../context/AuthContext.jsx";
 const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
   const [answerText, setAnswerText] = useState("");
   const { currentUser } = useAuth();
-  const [askedByName, setAskedByName] = useState("");
-  const [answeredByNames, setAnsweredByNames] = useState({});
-
-  useEffect(() => {
-    if (!currentUser) return;
-    const fetchUserNames = async () => {
-      try {
-        const askedByUser = await AhiskaApi.getCurrentUser(question.askedBy);
-
-        setAskedByName(
-          `${askedByUser.user.firstName} ${askedByUser.user.lastName}`
-        );
-
-        if (question.answers && question.answers.length > 0) {
-          const names = {};
-          for (const answer of question.answers) {
-            const answeredByUser = await AhiskaApi.getCurrentUser(
-              answer.answeredBy
-            );
-
-            names[
-              answer.id
-            ] = `${answeredByUser.user.firstName} ${answeredByUser.user.lastName}`;
-          }
-          setAnsweredByNames(names);
-        }
-      } catch (error) {
-        console.error("Error fetching user names:", error);
-      }
-    };
-
-    fetchUserNames();
-  }, [question, currentUser]);
 
   const handleAnswerSubmit = async (e) => {
     e.preventDefault();
@@ -69,9 +36,9 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
     <div className="border rounded-lg p-4 mb-4 shadow-md bg-white">
       <p className="font-bold">
         Question: {question.question}{" "}
-        {currentUser && (
-          <span className="text-gray-500">(Asked by: {askedByName})</span>
-        )}
+        <span className="text-gray-500">
+          (Asked by: {question.askedByFirstName} {question.askedByLastName})
+        </span>
       </p>
 
       {/* Display multiple answers */}
@@ -82,11 +49,10 @@ const QuestionItem = ({ question, onQuestionAnswered, onQuestionDeleted }) => {
             {question.answers.map((answer) => (
               <li key={answer.id} className="text-gray-700">
                 {answer.answer}{" "}
-                {currentUser && (
-                  <span className="text-gray-500">
-                    (Answered by: {answeredByNames[answer.id]})
-                  </span>
-                )}
+                <span className="text-gray-500">
+                  (Answered by: {answer.answeredByFirstName}{" "}
+                  {answer.answeredByLastName})
+                </span>
               </li>
             ))}
           </ul>
