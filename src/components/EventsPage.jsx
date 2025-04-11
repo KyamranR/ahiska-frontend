@@ -48,7 +48,6 @@ const EventsPage = () => {
         currentUser.id
       );
       if (!registrationsData || !registrationsData.registrations) {
-        console.error("No registrations data received");
         return;
       }
 
