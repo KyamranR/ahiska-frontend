@@ -5,7 +5,7 @@ import AhiskaApi from "../api/AhiskaApi.jsx";
 
 const SignupForm = () => {
   const navigate = useNavigate();
-  const { setCurrentUser } = useAuth();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -18,7 +18,11 @@ const SignupForm = () => {
     evt.preventDefault();
     try {
       const token = await AhiskaApi.register(formData);
-      setCurrentUser({ firstName: formData.firstName, token });
+      const decoded = AhiskaApi.decodeToken(token);
+      const userId = decoded?.userId || decoded?.id;
+      const { user } = await AhiskaApi.getCurrentUser(userId);
+
+      login(user, token);
       navigate("/");
     } catch (err) {
       setError(err.error || "Signup failed.");
