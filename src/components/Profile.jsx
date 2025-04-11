@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../context/AuthContext";
 import AhiskaApi from "../api/AhiskaApi";
 import { useNavigate } from "react-router-dom";
+import defaultProfilePic from "../assets/react.svg";
 
 const Profile = () => {
   const { currentUser, setCurrentUser } = useAuth();
@@ -34,11 +35,29 @@ const Profile = () => {
     setFormData({ ...formData, [evt.target.name]: evt.target.value });
   };
 
+  const handleDelete = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete your profile? This action cannot be undone."
+    );
+    if (!confirmed) return;
+
+    try {
+      await AhiskaApi.deleteUser(currentUser.id);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      setCurrentUser(null);
+
+      AhiskaApi.token = null;
+      navigate("/");
+    } catch (error) {
+      console.error("Error deleting user", error);
+    }
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     try {
       const updatedUser = await AhiskaApi.updateUser(currentUser.id, formData);
-      console.log("Updated User", updatedUser);
 
       setCurrentUser((prevUser) => ({
         ...prevUser,
@@ -57,9 +76,9 @@ const Profile = () => {
 
       {/* Profile Picture */}
       <img
-        src={formData.profilePic || "/default-profile.png"}
+        src={formData.profilePic || defaultProfilePic}
         alt="Profile"
-        className="w-32 h-32 rounded-full mx-auto mb-4"
+        className="w-32 h-32 rounded-full mx-auto mb-4 border-5"
       />
 
       {/* Edit Mode */}
@@ -120,6 +139,20 @@ const Profile = () => {
             className="w-full mt-4 bg-blue-500 text-white py-2 rounded"
           >
             Edit Profile
+          </button>
+
+          <button
+            onClick={() => navigate("/change-password")}
+            className="w-full mt-2 bg-yellow-500 text-white py-2 rounded"
+          >
+            Change Password
+          </button>
+
+          <button
+            onClick={handleDelete}
+            className="w-full mt-2 bg-red-600 text-white py-2 rounded"
+          >
+            Delete Profile
           </button>
         </div>
       )}
