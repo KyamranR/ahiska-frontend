@@ -69,7 +69,16 @@ class AhiskaApi {
   static async updateUser(userId, userData) {
     return await this.request(`users/${userId}`, userData, "patch");
   }
-
+  static async changePassword(userId, newPassword) {
+    const res = await this.request(
+      `users/${userId}/password`,
+      {
+        newPassword,
+      },
+      "patch"
+    );
+    return res;
+  }
   static async deleteUser(userId) {
     return await this.request(`users/${userId}`, {}, "delete");
   }
