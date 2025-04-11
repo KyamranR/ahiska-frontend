@@ -9,6 +9,7 @@ import Contact from "./components/ContactPage.jsx";
 import EventsPage from "./components/EventsPage.jsx";
 import QuestionList from "./components/QuestionList.jsx";
 import AdminPanel from "./components/AdminPanel.jsx";
+import ChangePassword from "./components/ChangePassword";
 import { AuthProvider } from "./context/AuthContext.jsx";
 import "./App.css";
 
@@ -27,6 +28,7 @@ function App() {
           <Route path="/events" element={<EventsPage />} />
           <Route path="/q_and_a" element={<QuestionList />} />
           <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/change-password" element={<ChangePassword />} />
         </Routes>
       </Router>
     </AuthProvider>
