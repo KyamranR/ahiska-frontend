@@ -37,7 +37,8 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
       console.error("Error updating event:", error);
     }
   };
-
+  console.log("eventdata", eventData);
+  console.log("event date", eventData.event_date);
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <div className="mb-4">

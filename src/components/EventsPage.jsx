@@ -66,25 +66,22 @@ const EventsPage = () => {
       navigate("/login");
       return;
     }
-    console.log("Register button clicked for event ID:", eventId);
-    console.log("Current User ID:", currentUser.id);
+
     setIsRegistering((prev) => ({ ...prev, [eventId]: true }));
     const wasRegistered = userRegistrations[eventId];
 
     try {
       if (wasRegistered) {
-        console.log("Unregistering user from event ID:", eventId);
         await AhiskaApi.unregisterFromEvent(eventId);
-        console.log("Successfully unregistered.");
+
         setUserRegistrations((prev) => {
           const updatedRegistrations = { ...prev };
           delete updatedRegistrations[eventId];
           return updatedRegistrations;
         });
       } else {
-        console.log("Registering user for event ID:", eventId);
         await AhiskaApi.registerForEvent(eventId);
-        console.log("Successfully registered.");
+
         setUserRegistrations((prev) => ({
           ...prev,
           [eventId]: true,
@@ -142,7 +139,7 @@ const EventsPage = () => {
               day: "numeric",
             })}
           </p>
-          <p>Time: {event.time}</p>
+          <p>Time: {event.event_time}</p>
           <p>Location: {event.location}</p>
           <button
             onClick={() => handleRegister(event.id)}

@@ -35,7 +35,7 @@ const HomePage = () => {
                     day: "numeric",
                   })}
                 </p>
-                <p className="text-gray-600">{event.time}</p>
+                <p className="text-gray-600">{event.event_time}</p>
                 <p>{event.description}</p>
               </div>
             ))
