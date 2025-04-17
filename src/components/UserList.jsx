@@ -39,12 +39,15 @@ const UserList = ({ users, refreshUsers }) => {
       <h2 className="text-xl font-semibold mb-2">Users</h2>
       <ul className="divide-y divide-gray-200">
         {users.map((user) => (
-          <li key={user.id} className="py-4 flex items-center justify-between">
+          <li
+            key={user.id}
+            className="py-4 flex items-center justify-between flex-wrap break-word"
+          >
             <div className="flex-grow">
-              <p className="font-medium text-gray-800">
+              <p className="font-medium text-gray-300">
                 {user.firstName} {user.lastName} ({user.email})
               </p>
-              <p className="text-sm text-gray-600">Role: {user.role}</p>
+              <p className="text-sm text-gray-400">Role: {user.role}</p>
             </div>
             <div className="flex items-center space-x-2">
               <select
@@ -57,7 +60,7 @@ const UserList = ({ users, refreshUsers }) => {
               </select>
               <button
                 onClick={() => handleUpdateRole(user.id)}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm"
+                className="bg-purple-900 hover:bg-purple-600 text-white font-bold py-1 px-2 rounded text-sm"
               >
                 Update Role
               </button>

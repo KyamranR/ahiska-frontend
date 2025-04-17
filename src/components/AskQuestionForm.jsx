@@ -18,18 +18,18 @@ const AskQuestionForm = ({ onQuestionCreated }) => {
   };
 
   return (
-    <div className="bg-gray-100 p-4 rounded-lg shadow-md">
+    <div className="bg-gray-600/60 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-purple-500/30 transition duration-300">
       <h3 className="text-lg font-semibold">Ask a Question</h3>
       <form onSubmit={handleSubmit} className="mt-2">
         <textarea
           value={questionText}
           onChange={(e) => setQuestionText(e.target.value)}
           placeholder="Your Question"
-          className="w-full border p-2 rounded-md"
+          className="bg-gray-800 w-full border p-2 rounded-md"
         />
         <button
           type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded-md mt-2"
+          className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 px-4 py-2 rounded-lg text-white shadow-lg"
         >
           Ask
         </button>

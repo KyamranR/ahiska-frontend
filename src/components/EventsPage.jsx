@@ -11,9 +11,11 @@ const EventsPage = () => {
   const [eventFeedback, setEventFeedback] = useState({});
   const [userRegistrations, setUserRegistrations] = useState({});
   const [isRegistering, setIsRegistering] = useState({});
+  const [showFeedbackForm, setShowFeedbackForm] = useState(false);
+  const [loadingRegistrations, setLoadingRegistrations] = useState(true);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const fetchInitialData = async () => {
       try {
         const response = await AhiskaApi.getAllEvents();
         setEvents(response.events);
@@ -22,12 +24,35 @@ const EventsPage = () => {
         });
         if (currentUser) {
           await fetchUserRegistrations();
+        } else {
+          setLoadingRegistrations(false);
         }
       } catch (error) {
         console.error("Error fetching events:", error);
+        setLoadingRegistrations(false);
       }
     };
-    fetchEvents();
+
+    const fetchUserRegistrations = async () => {
+      try {
+        const registrationsData = await AhiskaApi.getUserRegistrations(
+          currentUser.id
+        );
+        if (registrationsData?.registrations) {
+          const registrations = {};
+          registrationsData.registrations.forEach((reg) => {
+            registrations[reg.eventId] = true;
+          });
+          setUserRegistrations(registrations);
+        }
+      } catch (error) {
+        console.error("Error fetching user registrations:", error);
+      } finally {
+        setLoadingRegistrations(false);
+      }
+    };
+
+    fetchInitialData();
   }, [currentUser]);
 
   const fetchFeedback = async (eventId) => {
@@ -42,24 +67,33 @@ const EventsPage = () => {
     }
   };
 
-  const fetchUserRegistrations = async () => {
-    try {
-      const registrationsData = await AhiskaApi.getUserRegistrations(
-        currentUser.id
-      );
-      if (!registrationsData || !registrationsData.registrations) {
-        return;
-      }
-
-      const registrations = {};
-      registrationsData.registrations.forEach((reg) => {
-        registrations[reg.eventId] = true;
-      });
-      setUserRegistrations(registrations);
-    } catch (error) {
-      console.error("Error fetching user registrations:", error);
-    }
+  const toggleFeedbackForm = (eventId) => {
+    setShowFeedbackForm((prev) => ({
+      ...prev,
+      [eventId]: !prev[eventId],
+    }));
   };
+
+  // const fetchUserRegistrations = async () => {
+  //   try {
+  //     const registrationsData = await AhiskaApi.getUserRegistrations(
+  //       currentUser.id
+  //     );
+  //     if (registrationsData?.registrations) {
+  //       const registrations = {};
+  //       registrationsData.registrations.forEach((reg) => {
+  //         registrations[reg.eventId] = true;
+  //       });
+  //       setUserRegistrations(registrations);
+  //     }
+  //   } catch (error) {
+  //     console.error("Error fetching user registrations:", error);
+  //   } finally {
+  //     setLoadingRegistrations(false);
+  //   }
+
+  //   fetchEvents();
+  // };
 
   const handleRegister = async (eventId) => {
     if (!currentUser) {
@@ -70,27 +104,25 @@ const EventsPage = () => {
     setIsRegistering((prev) => ({ ...prev, [eventId]: true }));
     const wasRegistered = userRegistrations[eventId];
 
+    console.log("User registrations:", wasRegistered);
     try {
       if (wasRegistered) {
-        await AhiskaApi.unregisterFromEvent(eventId);
-
         setUserRegistrations((prev) => {
           const updatedRegistrations = { ...prev };
           delete updatedRegistrations[eventId];
           return updatedRegistrations;
         });
+        await AhiskaApi.unregisterFromEvent(eventId);
       } else {
-        await AhiskaApi.registerForEvent(eventId);
-
         setUserRegistrations((prev) => ({
           ...prev,
           [eventId]: true,
         }));
+        await AhiskaApi.registerForEvent(eventId);
       }
-
-      await fetchUserRegistrations();
     } catch (error) {
       console.error("Error registering for event:", error);
+
       alert(
         `Registration failed: ${
           error?.message || "An unexpected error occurred."
@@ -125,73 +157,103 @@ const EventsPage = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Upcoming Events</h1>
-      {events.map((event) => (
-        <div key={event.id} className="border p-4 mb-4">
-          <h2 className="text-lg font-semibold">{event.title}</h2>
-          <p>{event.description}</p>
-          <p>
-            Date:{" "}
-            {new Date(event.event_date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
-          </p>
-          <p>Time: {event.event_time}</p>
-          <p>Location: {event.location}</p>
-          <button
-            onClick={() => handleRegister(event.id)}
-            className={
-              userRegistrations[event.id]
-                ? "bg-red-500 text-white px-4 py-2 rounded mt-2 mr-2"
-                : "bg-blue-500 text-white px-4 py-2 rounded mt-2 mr-2"
-            }
-            disabled={isRegistering[event.id]}
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-4 py-10">
+      <h1 className="text-4xl font-bold text-center mb-10 drop-shadow-lg">
+        Upcoming Events
+      </h1>
+      <div className="max-w-6xl mx-auto space-y-8">
+        {events.map((event) => (
+          <div
+            key={event.id}
+            className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-purple-500/30 transition duration-300"
           >
-            {isRegistering[event.id]
-              ? "Processing..."
-              : userRegistrations[event.id]
-              ? "Unregister"
-              : "Register"}
-          </button>
-          {currentUser && (
-            <div className="mt-2">
-              <textarea
-                value={feedbackText[event.id] || ""}
-                onChange={(e) =>
-                  setFeedbackText((prevTexts) => ({
-                    ...prevTexts,
-                    [event.id]: e.target.value,
-                  }))
-                }
-                placeholder="Leave feedback..."
-                className="border p-2 w-full"
-              />
-              <button
-                onClick={() => handleFeedbackSubmit(event.id)}
-                className="bg-green-500 text-white px-4 py-2 rounded mt-2"
-              >
-                Submit Feedback
-              </button>
+            <h2 className="text-2xl font-bold text-purple-300 mb-2">
+              {event.title}
+            </h2>
+            <p className="text-gray-300 mb-2">{event.description}</p>
+            <div className="text-sm text-gray-400 space-y-1 mb-4">
+              <p>
+                Date:{" "}
+                {new Date(event.event_date).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </p>
+              <p>Time: {event.event_time}</p>
+              <p>Location: {event.location}</p>
             </div>
-          )}
-          {eventFeedback[event.id] && (
-            <div className="mt-2">
-              <h3 className="text-lg font-semibold">Feedback:</h3>
-              <ul>
-                {eventFeedback[event.id].map((feedback) => (
-                  <li key={feedback.id}>
-                    {feedback.content} - {feedback.firstName}{" "}
-                    {feedback.lastName}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      ))}
+            <button
+              onClick={() => handleRegister(event.id)}
+              className={`${
+                userRegistrations[event.id]
+                  ? "bg-red-600 hover:bg-red-700"
+                  : "bg-blue-600 hover:bg-blue-700"
+              } text-white px-4 py-2 rounded-lg shadow transition mr-2`}
+              disabled={isRegistering[event.id] || loadingRegistrations}
+            >
+              {loadingRegistrations
+                ? "Loading..."
+                : isRegistering[event.id]
+                ? "Processing..."
+                : userRegistrations[event.id]
+                ? "Unregister"
+                : "Register"}
+            </button>
+            {currentUser && (
+              <>
+                <button
+                  onClick={() => toggleFeedbackForm(event.id)}
+                  className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 px-4 py-2 rounded-lg text-white shadow-lg mt-4"
+                >
+                  {showFeedbackForm[event.id] ? "Cancel" : "Add Feedback"}
+                </button>
+
+                {showFeedbackForm[event.id] && (
+                  <div className="mt-4">
+                    <textarea
+                      value={feedbackText[event.id] || ""}
+                      onChange={(e) =>
+                        setFeedbackText((prevTexts) => ({
+                          ...prevTexts,
+                          [event.id]: e.target.value,
+                        }))
+                      }
+                      placeholder="Leave feedback..."
+                      className="w-full p-3 rounded-lg bg-gray-700 text-white border border-gray-600 placeholder-gray-400 mb-2"
+                    />
+                    <button
+                      onClick={() => handleFeedbackSubmit(event.id)}
+                      className="bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 px-4 py-2 rounded-lg text-white shadow-lg"
+                    >
+                      Submit Feedback
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+
+            {eventFeedback[event.id] && (
+              <div className="bg-gray-700 mt-3 space-y-2 p-5 rounded-md">
+                <h3 className="text-lg font-semibold text-purple-200 mb-2">
+                  Feedback:
+                </h3>
+
+                <ul className="list-inside text-gray-300 space-y-1">
+                  {eventFeedback[event.id].map((feedback) => (
+                    <li key={feedback.id}>
+                      <span className="font-medium text-white">
+                        {feedback.firstName} {feedback.lastName}:
+                      </span>{" "}
+                      {feedback.content}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

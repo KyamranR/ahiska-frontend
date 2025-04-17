@@ -1,5 +1,5 @@
 import { useState } from "react";
-import emailjs from "emailjs-com"; // Install this package for sending emails
+import emailjs from "emailjs-com";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +27,6 @@ const Contact = () => {
         "9zaM_GwjLLtVqw2Kj"
       );
 
-      console.log("Email sent:", response);
       setStatus("Message sent successfully!");
       setFormData({
         name: "",
@@ -42,55 +41,71 @@ const Contact = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold text-center">Contact Us</h2>
-        {status && <p className="text-center mt-2 text-blue-500">{status}</p>}
-        <form onSubmit={handleSubmit} className="mt-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl animate-fade-in text-white">
+        <h2 className="text-3xl font-bold text-center text-indigo-300 mb-6">
+          Contact Us
+        </h2>
+        {status && (
+          <p className="text-center mb-4 text-sm text-indigo-200">{status}</p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-medium">Name</label>
+            <label className="block text-sm font-medium text-indigo-200">
+              Name
+            </label>
             <input
               type="text"
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="Your Name"
               required
             />
           </div>
-          <div className="mt-2">
-            <label className="block font-medium">Email</label>
+          <div>
+            <label className="block text-sm font-medium text-indigo-200">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="your@example.com"
               required
             />
           </div>
-          <div className="mt-2">
-            <label className="block font-medium">Subject</label>
+          <div>
+            <label className="block text-sm font-medium text-indigo-200">
+              Subject
+            </label>
             <input
               type="text"
               name="subject"
               value={formData.subject}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="Subject"
               required
             />
           </div>
-          <div className="mt-2">
-            <label className="block font-medium">Message</label>
+          <div>
+            <label className="block text-sm font-medium text-indigo-200">
+              Message
+            </label>
             <textarea
               name="message"
               value={formData.message}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+              placeholder="Your message..."
               required
             />
           </div>
-          <button className="w-full mt-4 bg-blue-500 text-white p-2 rounded">
+          <button className="w-full bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 p-2 rounded-lg text-white font-semibold">
             Send Message
           </button>
         </form>

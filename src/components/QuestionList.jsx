@@ -37,16 +37,25 @@ const QuestionList = () => {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h2 className="text-2xl font-bold text-center">Q&A</h2>
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white px-4 py-10">
+      <div className="text-center mb-6">
+        <h2 className="text-4xl font-bold text-center mb-1 drop-shadow-lg">
+          Community Q&A
+        </h2>
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
+          Ask questions, get answers, help others!
+        </p>
+      </div>
 
       {/* Ask a question form */}
       {currentUser && (
         <AskQuestionForm onQuestionCreated={handleQuestionCreated} />
       )}
-
+      <h1 className="text-4xl font-bold text-center mb-1 drop-shadow-lg mt-5">
+        Answers
+      </h1>
       {/* Questions list */}
-      <div className="mt-4">
+      <div className="space-y-6 mt-6">
         {questions.length > 0 ? (
           questions.map((question) => (
             <QuestionItem
@@ -57,7 +66,9 @@ const QuestionList = () => {
             />
           ))
         ) : (
-          <p className="text-center text-gray-500">No questions available.</p>
+          <p className="text-center text-gray-500 dark:text-gray-400">
+            No questions available.
+          </p>
         )}
       </div>
     </div>

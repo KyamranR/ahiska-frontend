@@ -34,54 +34,64 @@ const SignupForm = () => {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded shadow-md w-96">
-        <h2 className="text-2xl font-bold text-center">Sign Up</h2>
+    <div className="min-h-screen bg-gradient-to-br from-[#0f172a] to-[#1e293b] flex items-center justify-center px-4 py-16">
+      <div className="w-full max-w-lg bg-white/10 backdrop-blur-lg p-8 rounded-2xl shadow-2xl animate-fade-in text-white">
+        <h2 className="text-3xl font-bold text-center text-indigo-300 mb-6">
+          Sign Up
+        </h2>
         {error && <p className="text-red-500 text-center">{error}</p>}
-        <form onSubmit={handleSubmit} className="mt-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block font-medium">First Name:</label>
+            <label className="block text-lg font-medium text-indigo-200">
+              First Name
+            </label>
             <input
               type="text"
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
-            <label className="block font-medium">Last Name:</label>
+            <label className="block text-lg font-medium text-indigo-200">
+              Last Name
+            </label>
             <input
               type="text"
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
           </div>
           <div className="mt-2">
-            <label className="block font-medium">Email</label>
+            <label className="block text-lg font-medium text-indigo-200">
+              Email
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
           </div>
           <div className="mt-2">
-            <label className="block font-medium">Password</label>
+            <label className="block text-lg font-medium text-indigo-200">
+              Password
+            </label>
             <input
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="w-full border p-2 rounded mt-1"
+              className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
           </div>
-          <button className="w-full mt-4 bg-green-500 text-white p-2 rounded">
+          <button className="w-full bg-indigo-500 hover:bg-indigo-600 transition-colors duration-300 p-3 rounded-lg text-white font-semibold">
             Sign Up
           </button>
         </form>
