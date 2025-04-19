@@ -38,9 +38,9 @@ const EventsPage = () => {
         const registrationsData = await AhiskaApi.getUserRegistrations(
           currentUser.id
         );
-        if (registrationsData?.registrations) {
+        if (Array.isArray(registrationsData?.registrations?.registration)) {
           const registrations = {};
-          registrationsData.registrations.forEach((reg) => {
+          registrationsData.registrations.registration.forEach((reg) => {
             registrations[reg.eventId] = true;
           });
           setUserRegistrations(registrations);
@@ -74,27 +74,6 @@ const EventsPage = () => {
     }));
   };
 
-  // const fetchUserRegistrations = async () => {
-  //   try {
-  //     const registrationsData = await AhiskaApi.getUserRegistrations(
-  //       currentUser.id
-  //     );
-  //     if (registrationsData?.registrations) {
-  //       const registrations = {};
-  //       registrationsData.registrations.forEach((reg) => {
-  //         registrations[reg.eventId] = true;
-  //       });
-  //       setUserRegistrations(registrations);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user registrations:", error);
-  //   } finally {
-  //     setLoadingRegistrations(false);
-  //   }
-
-  //   fetchEvents();
-  // };
-
   const handleRegister = async (eventId) => {
     if (!currentUser) {
       navigate("/login");
@@ -104,7 +83,6 @@ const EventsPage = () => {
     setIsRegistering((prev) => ({ ...prev, [eventId]: true }));
     const wasRegistered = userRegistrations[eventId];
 
-    console.log("User registrations:", wasRegistered);
     try {
       if (wasRegistered) {
         setUserRegistrations((prev) => {
@@ -143,8 +121,6 @@ const EventsPage = () => {
       await AhiskaApi.addFeedback(eventId, {
         content: feedbackText[eventId] || "",
       });
-
-      // alert("Feedback submitted!");
 
       setFeedbackText((prevTexts) => ({ ...prevTexts, [eventId]: "" }));
 
