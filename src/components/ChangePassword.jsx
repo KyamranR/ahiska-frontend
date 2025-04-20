@@ -39,6 +39,7 @@ const ChangePassword = () => {
             Change Password
           </button>
           <button
+            type="button"
             onClick={() => navigate("/profile")}
             className="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md px-3"
           >
