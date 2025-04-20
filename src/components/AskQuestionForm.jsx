@@ -18,7 +18,7 @@ const AskQuestionForm = ({ onQuestionCreated }) => {
   };
 
   return (
-    <div className="bg-gray-600/60 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-purple-500/30 transition duration-300">
+    <div className="bg-gray-600/60 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-purple-500/30 transition duration-300 max-w-6xl mx-auto space-y-8">
       <h3 className="text-lg font-semibold">Ask a Question</h3>
       <form onSubmit={handleSubmit} className="mt-2">
         <textarea

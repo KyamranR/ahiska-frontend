@@ -55,7 +55,7 @@ const QuestionList = () => {
         Answers
       </h1>
       {/* Questions list */}
-      <div className="space-y-6 mt-6">
+      <div className="max-w-6xl mx-auto space-y-8">
         {questions.length > 0 ? (
           questions.map((question) => (
             <QuestionItem
