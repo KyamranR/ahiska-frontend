@@ -51,10 +51,14 @@ const Contact = () => {
         )}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-indigo-200">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium text-indigo-200"
+            >
               Name
             </label>
             <input
+              id="name"
               type="text"
               name="name"
               value={formData.name}
@@ -65,10 +69,14 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-indigo-200">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-indigo-200"
+            >
               Email
             </label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
@@ -79,10 +87,14 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-indigo-200">
+            <label
+              htmlFor="subject"
+              className="block text-sm font-medium text-indigo-200"
+            >
               Subject
             </label>
             <input
+              id="subject"
               type="text"
               name="subject"
               value={formData.subject}
@@ -93,10 +105,14 @@ const Contact = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-indigo-200">
+            <label
+              htmlFor="message"
+              className="block text-sm font-medium text-indigo-200"
+            >
               Message
             </label>
             <textarea
+              id="message"
               name="message"
               value={formData.message}
               onChange={handleChange}

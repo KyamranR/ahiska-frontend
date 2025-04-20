@@ -42,10 +42,14 @@ const SignupForm = () => {
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="firstName"
+              className="block text-lg font-medium text-indigo-200"
+            >
               First Name
             </label>
             <input
+              id="firstName"
               type="text"
               name="firstName"
               value={formData.firstName}
@@ -53,10 +57,14 @@ const SignupForm = () => {
               className="w-full p-2 mt-1 rounded-lg bg-white/20 text-white border border-indigo-500 placeholder:text-indigo-300 focus:outline-none focus:ring-2 focus:ring-indigo-400"
               required
             />
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="lastName"
+              className="block text-lg font-medium text-indigo-200"
+            >
               Last Name
             </label>
             <input
+              id="lastName"
               type="text"
               name="lastName"
               value={formData.lastName}
@@ -66,10 +74,14 @@ const SignupForm = () => {
             />
           </div>
           <div className="mt-2">
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-indigo-200"
+            >
               Email
             </label>
             <input
+              id="email"
               type="email"
               name="email"
               value={formData.email}
@@ -79,10 +91,14 @@ const SignupForm = () => {
             />
           </div>
           <div className="mt-2">
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="password"
+              className="block text-lg font-medium text-indigo-200"
+            >
               Password
             </label>
             <input
+              id="password"
               type="password"
               name="password"
               value={formData.password}

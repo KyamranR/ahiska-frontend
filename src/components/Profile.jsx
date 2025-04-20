@@ -90,6 +90,7 @@ const Profile = () => {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              placeholder="First Name"
               className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input
@@ -97,6 +98,7 @@ const Profile = () => {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+              placeholder="Last Name"
               className="w-full p-2 bg-gray-700 text-white border border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <input

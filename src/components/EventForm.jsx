@@ -50,10 +50,14 @@ const EventForm = ({ onEventCreated, onCancel, eventToEdit = null }) => {
   return (
     <form onSubmit={handleSubmit} className="mt-4">
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm font-bold mb-2">
+        <label
+          htmlFor="title"
+          className="block text-gray-300 text-sm font-bold mb-2"
+        >
           Title:
         </label>
         <input
+          id="title"
           type="text"
           name="title"
           value={eventData.title}
@@ -62,10 +66,14 @@ const EventForm = ({ onEventCreated, onCancel, eventToEdit = null }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm font-bold mb-2">
+        <label
+          htmlFor="description"
+          className="block text-gray-300 text-sm font-bold mb-2"
+        >
           Description:
         </label>
         <textarea
+          id="description"
           name="description"
           value={eventData.description}
           onChange={handleChange}
@@ -73,10 +81,14 @@ const EventForm = ({ onEventCreated, onCancel, eventToEdit = null }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm font-bold mb-2">
+        <label
+          htmlFor="date"
+          className="block text-gray-300 text-sm font-bold mb-2"
+        >
           Date:
         </label>
         <input
+          id="date"
           type="date"
           name="event_date"
           value={eventData.event_date}
@@ -85,10 +97,14 @@ const EventForm = ({ onEventCreated, onCancel, eventToEdit = null }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm font-bold mb-2">
+        <label
+          htmlFor="time"
+          className="block text-gray-300 text-sm font-bold mb-2"
+        >
           Time:
         </label>
         <input
+          id="time"
           type="text"
           name="event_time"
           value={eventData.event_time}
@@ -97,10 +113,14 @@ const EventForm = ({ onEventCreated, onCancel, eventToEdit = null }) => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-gray-300 text-sm font-bold mb-2">
+        <label
+          htmlFor="location"
+          className="block text-gray-300 text-sm font-bold mb-2"
+        >
           Location:
         </label>
         <input
+          id="location"
           type="text"
           name="location"
           value={eventData.location}

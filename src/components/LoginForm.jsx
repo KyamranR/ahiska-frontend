@@ -36,10 +36,14 @@ const LoginForm = () => {
         {error && <p className="text-red-500 text-center">{error}</p>}
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="email"
+              className="block text-lg font-medium text-indigo-200"
+            >
               Email
             </label>
             <input
+              id="email"
               type="text"
               name="email"
               value={formData.email}
@@ -49,10 +53,14 @@ const LoginForm = () => {
             />
           </div>
           <div className="mt-2">
-            <label className="block text-lg font-medium text-indigo-200">
+            <label
+              htmlFor="password"
+              className="block text-lg font-medium text-indigo-200"
+            >
               Password
             </label>
             <input
+              id="password"
               type="password"
               name="password"
               value={formData.password}
