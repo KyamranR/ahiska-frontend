@@ -62,19 +62,12 @@ const AdminPanel = () => {
 
   const handleDeleteEvent = async (eventId) => {
     try {
-      await AhiskaApi.deleteEventAdmin(eventId);
-      fetchData();
+      if (window.confirm("Are you sure you want to delete this event?")) {
+        await AhiskaApi.deleteEventAdmin(eventId);
+        fetchData();
+      }
     } catch (error) {
       console.error("Error deleting event:", error);
-    }
-  };
-
-  const handleDeleteFeedback = async (feedbackId) => {
-    try {
-      await AhiskaApi.deleteFeedback(feedbackId);
-      fetchData();
-    } catch (error) {
-      console.error("Error deleting feedback:", error);
     }
   };
 
@@ -186,23 +179,7 @@ const AdminPanel = () => {
 
             {tab === "feedback" && (
               <div className="bg-gray-800/60 backdrop-blur-md border border-gray-700 rounded-2xl p-6 shadow-xl hover:shadow-purple-500/30 transition duration-300">
-                <h2 className="text-xl font-semibold mb-2">Feedback</h2>
-                <ul>
-                  {feedback.map((fb) => (
-                    <li
-                      key={fb.id}
-                      className="flex justify-between items-center mt-2"
-                    >
-                      {fb.content}
-                      <button
-                        onClick={() => handleDeleteFeedback(fb.id)}
-                        className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
-                      >
-                        Delete
-                      </button>
-                    </li>
-                  ))}
-                </ul>
+                <FeedbackList feedback={feedback} refreshFeedback={fetchData} />
               </div>
             )}
 
