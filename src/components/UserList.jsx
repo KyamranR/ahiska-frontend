@@ -14,8 +14,10 @@ const UserList = ({ users, refreshUsers }) => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await AhiskaApi.deleteUserAdmin(userId);
-      refreshUsers();
+      if (window.confirm("Are you sure you want to delete this user?")) {
+        await AhiskaApi.deleteUserAdmin(userId);
+        refreshUsers();
+      }
     } catch (error) {
       console.error("Error deleting user:", error);
     }
