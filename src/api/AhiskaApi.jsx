@@ -4,14 +4,14 @@ import { jwtDecode } from "jwt-decode";
 const BASE_URL = import.meta.env.VITE_BASE_URL || "http://localhost:5001";
 
 class AhiskaApi {
-  static token = localStorage.getItem("token") || null;
-
   static async request(endpoint, data = {}, method = "get") {
     console.debug("API Call:", endpoint, data, method);
     const url = `${BASE_URL}/${endpoint}`;
     const headers = {};
-    if (AhiskaApi.token) {
-      headers.Authorization = `Bearer ${AhiskaApi.token}`;
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
     }
     const params = method === "get" ? data : {};
 
@@ -134,8 +134,12 @@ class AhiskaApi {
     );
   }
 
-  static async deleteFeedback(feedbackId) {
-    return await this.request(`feedback/${feedbackId}`, {}, "delete");
+  static async deleteFeedback(eventId, feedbackId) {
+    return await this.request(
+      `events/${eventId}/feedback/${feedbackId}`,
+      {},
+      "delete"
+    );
   }
 
   /** Q and A ROUTES */
