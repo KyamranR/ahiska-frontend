@@ -50,6 +50,7 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
           value={eventData.title}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+          required
         />
       </div>
       <div className="mb-4">
@@ -73,6 +74,7 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
           value={eventData.event_date}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+          required
         />
       </div>
       <div className="mb-4">
@@ -85,6 +87,7 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
           value={eventData.event_time}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+          required
         />
       </div>
       <div className="mb-4">
@@ -97,6 +100,7 @@ const EditEventForm = ({ eventToEdit, onEventUpdated, onCancel }) => {
           value={eventData.location}
           onChange={handleChange}
           className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-400 leading-tight focus:outline-none focus:shadow-outline"
+          required
         />
       </div>
       <button
