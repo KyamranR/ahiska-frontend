@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
 import AhiskaApi from "../api/AhiskaApi";
-import { useAuth } from "../context/AuthContext.jsx";
 
 const HomePage = () => {
-  const { currentUser } = useAuth();
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
