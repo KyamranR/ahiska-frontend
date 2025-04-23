@@ -7,8 +7,8 @@ import AhiskaApi from "../api/AhiskaApi";
 vi.mock("../api/AhiskaApi");
 
 const mockFeedback = [
-  { id: 1, comment: "Great event!", eventId: 101 },
-  { id: 2, comment: "Needs improvement", eventId: 102 },
+  { id: 1, content: "Great event!", eventId: 101 },
+  { id: 2, content: "Needs improvement", eventId: 102 },
 ];
 
 describe("FeedbackList component", () => {
@@ -23,7 +23,7 @@ describe("FeedbackList component", () => {
   it("calls deleteFeedback and refreshFeedback on delete", async () => {
     AhiskaApi.deleteFeedback.mockResolvedValueOnce();
     const refreshFeedback = vi.fn();
-
+    vi.spyOn(window, "confirm").mockReturnValue(true);
     render(
       <FeedbackList feedback={mockFeedback} refreshFeedback={refreshFeedback} />
     );
@@ -32,7 +32,7 @@ describe("FeedbackList component", () => {
     fireEvent.click(deleteButton);
 
     await waitFor(() => {
-      expect(AhiskaApi.deleteFeedback).toHaveBeenCalledWith(1);
+      expect(AhiskaApi.deleteFeedback).toHaveBeenCalledWith(101, 1);
       expect(refreshFeedback).toHaveBeenCalled();
     });
   });

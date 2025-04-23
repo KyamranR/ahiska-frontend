@@ -53,6 +53,8 @@ describe("UserList", () => {
   it("calls deleteUserAdmin and refreshUsers on delete", async () => {
     AhiskaApi.deleteUserAdmin.mockResolvedValue({});
 
+    vi.spyOn(window, "confirm").mockReturnValue(true);
+
     render(<UserList users={mockUsers} refreshUsers={mockRefresh} />);
 
     const deleteButtons = screen.getAllByRole("button", { name: /delete/i });

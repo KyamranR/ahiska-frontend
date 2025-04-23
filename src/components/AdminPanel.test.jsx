@@ -39,10 +39,6 @@ vi.mock("./UserList", () => ({
   default: ({ users }) => <div>Mocked UserList ({users.length})</div>,
 }));
 
-vi.mock("./FeedbackList", () => ({
-  default: () => <div>Mocked FeedbackList</div>,
-}));
-
 describe("AdminPanel", () => {
   it("renders the Admin Panel and displays events tab by default", async () => {
     render(<AdminPanel />);
