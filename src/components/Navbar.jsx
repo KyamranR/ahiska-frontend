@@ -54,6 +54,30 @@ const Navbar = () => {
               Admin Panel
             </NavLink>
           )}
+
+          {!currentUser ? (
+            <div className="flex flex-col md:hidden gap-2">
+              <Link
+                to="/login"
+                className="bg-white text-gray-900 hover:bg-gray-200 px-4 py-2 rounded-md text-sm font-medium"
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="bg-purple-600 text-white hover:bg-purple-700 px-4 py-2 rounded-md text-sm font-medium"
+              >
+                Sign Up
+              </Link>
+            </div>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md text-sm md:hidden"
+            >
+              Logout
+            </button>
+          )}
         </div>
 
         <div className="hidden md:flex items-center gap-4 text-white">
