@@ -9,6 +9,10 @@ Link to the website [Ahiska-Community](https://ahiska-community-d0a5.onrender.co
 - npm install in the terminal
 - npm run dev
 
+## How to run tests
+
+- npm run test
+
 ## API
 
 [API Link](https://github.com/KyamranR/ahiska-backend)
