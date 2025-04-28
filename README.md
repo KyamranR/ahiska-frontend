@@ -1,3 +1,22 @@
+# Ahiska Community
+
+Link to the website [Ahiska-Community](https://ahiska-community-d0a5.onrender.com)
+
+## How to run locally
+
+- Clone from github
+- npm install in the terminal
+- npm run dev
+
+## API
+
+[API Link](https://github.com/KyamranR/ahiska-backend)
+
+## Technology Stack
+
+- Frontend: React.js, Tailwind CSS
+- Backend: Node.js, Express, Postgresql
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
