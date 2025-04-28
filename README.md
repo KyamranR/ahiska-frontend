@@ -5,6 +5,7 @@ Link to the website [Ahiska-Community](https://ahiska-community-d0a5.onrender.co
 ## How to run locally
 
 - Clone from github
+- Setup .env file
 - npm install in the terminal
 - npm run dev
 
