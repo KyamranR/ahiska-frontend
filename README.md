@@ -2,18 +2,36 @@
 
 Link to the website [Ahiska-Community](https://ahiska-community-d0a5.onrender.com)
 
+## What the website does?
+
+- User can see upcoming events
+- User can leave feedback on the events
+- User can ask question and get help
+- User can update or edit their profile(First name, Last name, bio, profile photo )
+- User can delete their profile
+
+## Walkthrough of the website
+
+- [Main Page](./userFlow/mainPage.png)
+- [Event Page](./userFlow/eventPage.png)
+- [Contact Page](./userFlow/contactPage.png)
+- [Q and A Page](./userFlow/qAndAPage.png)
+- [Login Page](./userFlow/loginPage.png)
+- [Sign Up Page](./userFlow/signupPage.png)
+- [User profile](./userFlow/profilePage.png)
+- [Update user profile](./userFlow/editProfile.png)
+- [Update password](./userFlow/changePassword.png)
+
 ## How to run locally
 
 - Clone from github
 - Setup .env file
-- npm install in the terminal
-- npm run dev
+- Run `npm install` in the terminal
+- Run `npm run dev`
 
 ## How to run tests
 
-- npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
-
-- npm run test
+- Run `npm run test`
 
 ## API
 
