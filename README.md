@@ -11,6 +11,8 @@ Link to the website [Ahiska-Community](https://ahiska-community-d0a5.onrender.co
 
 ## How to run tests
 
+- npm install --save-dev vitest @testing-library/react @testing-library/jest-dom
+
 - npm run test
 
 ## API
